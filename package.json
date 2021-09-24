@@ -1,0 +1,25 @@
+{
+  "name": "yobot",
+  "version": "1.0.0",
+  "description": "A Discord Bot to manage server and entertainment",
+  "main": "/dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "nodemon src/index.ts",
+    "build": "tsc -p ."
+  },
+  "author": "SirAtul1204",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/builders": "^0.6.0",
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "discord-api-types": "^0.23.1",
+    "discord.js": "^13.1.0",
+    "dotenv": "^10.0.0",
+    "ts-node": "^10.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12",
+    "typescript": "^4.4.3"
+  }
+}
