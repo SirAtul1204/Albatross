@@ -1,13 +1,15 @@
-import { Client, CommandInteraction } from "discord.js";
+import { Client, CommandInteraction, Guild } from "discord.js";
 import { convertToCode } from "../utils/convertToCode";
+import { handleError } from "../utils/handleError";
 
 export async function ping(interaction: CommandInteraction, client: Client) {
   try {
     //Latency
-    await interaction.reply(convertToCode(`Pong! ${client.ws.ping}ms`));
+    await interaction.reply({
+      embeds: convertToCode(`Pong! ${client.ws.ping}ms`),
+    });
   } catch (e) {
-    await interaction.reply(convertToCode("Oops! Looks like you found a bug."));
-    console.log("Some Error", e);
+    handleError(interaction.guild as Guild, e);
   }
 }
 export default ping;

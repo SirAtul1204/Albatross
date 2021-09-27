@@ -1,2 +1,10 @@
 export const PING = "ping";
 export const KICK = "kick";
+export const UPDATE = "update";
+export const LEAVE = "leave";
+export const PROMOTE = "promote";
+export const DEMOTE = "demote";
+export const PLAY = "play";
+export const PAUSE = "pause";
+export const RESUME = "resume";
+export const STOP = "stop";

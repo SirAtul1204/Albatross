@@ -1,5 +1,16 @@
-export function convertToCode(s: string): string {
-  const backTick = "`";
-  let res = backTick.concat(s).concat(backTick);
-  return res;
+import { MessageEmbed } from "discord.js";
+
+export function convertToCode(
+  title: string,
+  description?: string,
+  img?: string
+): MessageEmbed[] {
+  const embed = new MessageEmbed().setColor("#0099ff").setTitle(title);
+  if (description) embed.setDescription(description);
+  if (img) embed.setImage(img);
+
+  return [embed];
+  // const backTick = "`";
+  // let res = backTick.concat(s).concat(backTick);
+  // return res;
 }
