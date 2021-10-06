@@ -1,0 +1,30 @@
+import axios from "axios";
+import { CommandInteraction, Guild } from "discord.js";
+import { convertToCode } from "../utils/convertToCode";
+import { handleError } from "../utils/handleError";
+
+const memesSubReddits = [
+  "IndianMeyMeys",
+  "meme",
+  "indiameme",
+  "IndianDankMemes",
+  "dankmemes",
+];
+
+export async function meme(interaction: CommandInteraction) {
+  try {
+    let url = "https://meme-api.herokuapp.com/gimme/";
+    const subReddit =
+      memesSubReddits[Math.floor(Math.random() * memesSubReddits.length)];
+    url += subReddit;
+    let response = await axios.get(url);
+    let data = response.data;
+    await interaction.reply({
+      embeds: convertToCode(`${data.title}`, `${data.author}`, data.url),
+    });
+  } catch (e) {
+    handleError(interaction.guild as Guild, e);
+  }
+}
+
+export default meme;

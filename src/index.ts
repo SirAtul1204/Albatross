@@ -5,14 +5,17 @@ import {
   ADD,
   CLEAR,
   DEMOTE,
+  GIF,
   KICK,
   LEAVE,
+  MEME,
   NEXT,
   PAUSE,
   PING,
   PLAY,
   PROMOTE,
   RESUME,
+  SHOW,
   STOP,
   UPDATE,
   VOLUME,
@@ -36,6 +39,9 @@ import volume from "./helpers/volume";
 import add from "./helpers/add";
 import clear from "./helpers/clear";
 import next from "./helpers/next";
+import gif from "./helpers/gif";
+import meme from "./helpers/meme";
+import show from "./helpers/show";
 config();
 
 connect(String(process.env.MONGODB_URI), () => {
@@ -102,6 +108,15 @@ client.on("interactionCreate", async (interaction) => {
       break;
     case NEXT:
       await next(interaction, VoiceController);
+      break;
+    case GIF:
+      await gif(interaction);
+      break;
+    case MEME:
+      await meme(interaction);
+      break;
+    case SHOW:
+      await show(interaction, VoiceController);
       break;
     default:
       await interaction.reply({ embeds: convertToCode("Wrong Command") });

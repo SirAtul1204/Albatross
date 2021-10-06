@@ -18,6 +18,9 @@ import {
   ADD,
   CLEAR,
   NEXT,
+  GIF,
+  MEME,
+  SHOW,
 } from "./commands";
 
 export function registerCommands(GUILD_ID: string) {
@@ -25,12 +28,6 @@ export function registerCommands(GUILD_ID: string) {
     new SlashCommandBuilder()
       .setName(PING)
       .setDescription("Replies with pong!"),
-    new SlashCommandBuilder()
-      .setName("server")
-      .setDescription("Replies with server info!"),
-    new SlashCommandBuilder()
-      .setName("user")
-      .setDescription("Replies with user info!"),
     new SlashCommandBuilder()
       .setName(KICK)
       .setDescription("Kicks a user")
@@ -125,6 +122,21 @@ export function registerCommands(GUILD_ID: string) {
     new SlashCommandBuilder()
       .setName(NEXT)
       .setDescription("Play next song in queue"),
+    new SlashCommandBuilder()
+      .setName(GIF)
+      .setDescription("Get a gif based on your search words")
+      .addStringOption((option) => {
+        return option
+          .setName("search")
+          .setDescription("search keywords")
+          .setRequired(true);
+      }),
+    new SlashCommandBuilder()
+      .setName(MEME)
+      .setDescription("Get a meme from famous memes subreddit"),
+    new SlashCommandBuilder()
+      .setName(SHOW)
+      .setDescription("Shows current queue"),
   ].map((command) => command.toJSON());
 
   const rest = new REST({ version: "9" }).setToken(String(process.env.TOKEN));

@@ -26,7 +26,9 @@ export async function add(
         }
       } else {
         await interaction.reply({
-          embeds: convertToCode(`You are not playing anything`),
+          embeds: convertToCode(
+            `You are not playing anything first play a song using /play`
+          ),
         });
       }
     } else {

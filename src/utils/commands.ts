@@ -12,3 +12,6 @@ export const VOLUME = "volume";
 export const ADD = "add";
 export const CLEAR = "clear";
 export const NEXT = "next";
+export const GIF = "gif";
+export const MEME = "meme";
+export const SHOW = "show";

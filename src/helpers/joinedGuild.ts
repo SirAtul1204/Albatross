@@ -3,7 +3,6 @@ import { convertToCode } from "../utils/convertToCode";
 import { registerCommands } from "../utils/deploy-commands";
 import { ANNOUNCEMENT_CHANNEL_NAME, Errors, Roles } from "../utils/enum";
 import { handleError } from "../utils/handleError";
-import { DetailsModel } from "../db/schema";
 import { initializeDb } from "../db/initializeDb";
 export async function joinedGuild(guild: Guild) {
   try {
