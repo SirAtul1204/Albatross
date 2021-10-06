@@ -7,6 +7,7 @@ export async function handleError(guild: Guild, e: any) {
   if (owner) {
     const dm = await owner.createDM();
     if (dm) {
+      console.log(e);
       switch (e) {
         case Errors.announcementChannelCantBeCreated:
           dm.send({
