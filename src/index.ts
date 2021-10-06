@@ -1,9 +1,13 @@
 import { config } from "dotenv";
-import { Client, Guild, GuildChannel, Intents, MessageEmbed } from "discord.js";
+import { connect } from "mongoose";
+import { Client, Guild, GuildChannel, Intents } from "discord.js";
 import {
+  ADD,
+  CLEAR,
   DEMOTE,
   KICK,
   LEAVE,
+  NEXT,
   PAUSE,
   PING,
   PLAY,
@@ -11,6 +15,7 @@ import {
   RESUME,
   STOP,
   UPDATE,
+  VOLUME,
 } from "./utils/commands";
 import { convertToCode } from "./utils/convertToCode";
 import ping from "./helpers/ping";
@@ -27,9 +32,17 @@ import pause from "./helpers/pause";
 import stop from "./helpers/stop";
 import resume from "./helpers/resume";
 import { VoiceObject } from "./utils/enum";
+import volume from "./helpers/volume";
+import add from "./helpers/add";
+import clear from "./helpers/clear";
+import next from "./helpers/next";
 config();
 
-const VoiceController: Map<string, VoiceObject> = new Map();
+connect(String(process.env.MONGODB_URI), () => {
+  console.log("Connected to MongoDB");
+});
+
+export const VoiceController: Map<string, VoiceObject> = new Map();
 
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES],
@@ -77,6 +90,18 @@ client.on("interactionCreate", async (interaction) => {
       break;
     case STOP:
       await stop(interaction, VoiceController);
+      break;
+    case VOLUME:
+      await volume(interaction, VoiceController);
+      break;
+    case ADD:
+      await add(interaction, VoiceController);
+      break;
+    case CLEAR:
+      await clear(interaction, VoiceController);
+      break;
+    case NEXT:
+      await next(interaction, VoiceController);
       break;
     default:
       await interaction.reply({ embeds: convertToCode("Wrong Command") });

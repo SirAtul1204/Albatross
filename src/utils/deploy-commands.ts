@@ -14,6 +14,10 @@ import {
   PAUSE,
   RESUME,
   STOP,
+  VOLUME,
+  ADD,
+  CLEAR,
+  NEXT,
 } from "./commands";
 
 export function registerCommands(GUILD_ID: string) {
@@ -98,6 +102,29 @@ export function registerCommands(GUILD_ID: string) {
       .setDescription(
         "Stops the song and make Albatross leave the voice channel"
       ),
+    new SlashCommandBuilder()
+      .setName(VOLUME)
+      .setDescription("Set Bot Volume (0-2) default is 1")
+      .addNumberOption((option) => {
+        return option
+          .setName("value")
+          .setDescription(
+            "Return the current volume or pass a value to change volume to that value"
+          );
+      }),
+    new SlashCommandBuilder()
+      .setName(ADD)
+      .setDescription("Add a song to queue, use /next to switch to next song.")
+      .addStringOption((option) => {
+        return option
+          .setName("search")
+          .setDescription("Search keyword or link for song")
+          .setRequired(true);
+      }),
+    new SlashCommandBuilder().setName(CLEAR).setDescription("Clears the queue"),
+    new SlashCommandBuilder()
+      .setName(NEXT)
+      .setDescription("Play next song in queue"),
   ].map((command) => command.toJSON());
 
   const rest = new REST({ version: "9" }).setToken(String(process.env.TOKEN));

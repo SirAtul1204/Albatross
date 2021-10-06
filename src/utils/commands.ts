@@ -8,3 +8,7 @@ export const PLAY = "play";
 export const PAUSE = "pause";
 export const RESUME = "resume";
 export const STOP = "stop";
+export const VOLUME = "volume";
+export const ADD = "add";
+export const CLEAR = "clear";
+export const NEXT = "next";

@@ -1,4 +1,4 @@
-import { AudioPlayer, VoiceConnection } from "@discordjs/voice";
+import { AudioPlayer, AudioResource, VoiceConnection } from "@discordjs/voice";
 
 export enum Errors {
   announcementChannelCantBeCreated = "Announcement Channel can't be created",
@@ -26,4 +26,5 @@ export interface VoiceObject {
   voiceChannelId: string;
   voiceChannelName: string;
   queue: string[];
+  resource: AudioResource;
 }

@@ -1,51 +1,32 @@
 import {
-  CommandInteraction,
-  Guild,
-  GuildMember,
-  VoiceChannel,
-} from "discord.js";
-import {
-  joinVoiceChannel,
-  createAudioPlayer,
   createAudioResource,
-  NoSubscriberBehavior,
   StreamType,
-  AudioPlayerStatus,
+  createAudioPlayer,
+  NoSubscriberBehavior,
 } from "@discordjs/voice";
-import ytdl from "ytdl-core";
 import axios from "axios";
-import { handleError } from "../utils/handleError";
+import { CommandInteraction, Guild, GuildMember } from "discord.js";
+import ytdl from "ytdl-core";
+import { DetailsModel } from "../db/schema";
 import { convertToCode } from "../utils/convertToCode";
 import { Roles, VoiceObject } from "../utils/enum";
-import { DetailsModel } from "../db/schema";
-import playNext from "./playNext";
-import stop from "./stop";
+import { handleError } from "../utils/handleError";
+import play from "./play";
 
-export async function play(
+export async function next(
   interaction: CommandInteraction,
   VoiceController: Map<string, VoiceObject>
 ) {
   try {
     const guild = interaction.guild as Guild;
-    const member = interaction.member as GuildMember;
-    const voiceChannel = member.voice.channel as VoiceChannel;
-
-    const options = interaction.options.getString("search");
-
-    let videoId: string = "";
-    if (options) {
-      const allOptions = options.split(" ");
+    const voiceController = VoiceController.get(guild.id);
+    if (voiceController as VoiceObject) {
+      const member = interaction.member as GuildMember;
       if (member.roles.cache.some((role) => role.name === Roles.DJ)) {
-        if (
-          !VoiceController.get(guild.id)?.voiceChannelName ||
-          member.voice.channelId ===
-            VoiceController.get(guild.id)?.voiceChannelId
-        ) {
-          const connection = joinVoiceChannel({
-            channelId: voiceChannel.id,
-            guildId: guild.id,
-            adapterCreator: guild.voiceAdapterCreator,
-          });
+        if (member.voice.channelId === voiceController?.voiceChannelId) {
+          const options = voiceController?.queue.shift()!;
+          const allOptions = options?.split(" ");
+          let videoId;
           let url = "";
           if (allOptions[0] === "link") {
             url = allOptions[1];
@@ -86,50 +67,37 @@ export async function play(
           });
 
           player.play(resource);
-
-          connection.subscribe(player);
-
-          const voiceController = VoiceController.get(guild.id);
-
-          VoiceController.set(guild.id, {
-            connection: connection,
-            player: player,
-            queue: new Array(),
-            voiceChannelId: voiceChannel.id,
-            voiceChannelName: voiceChannel.name,
-            resource: resource,
-          });
+          if (voiceController) {
+            voiceController.connection.subscribe(player);
+            voiceController.player = player;
+            voiceController.resource = resource;
+          }
 
           await interaction.reply({
             embeds: convertToCode(
               title,
-              `Enjoy your song at ${voiceChannel.name}`,
+              `Enjoy your song at ${voiceController?.voiceChannelName}`,
               img
             ),
           });
         } else {
           await interaction.reply({
             embeds: convertToCode(
-              `Already Playing at ${
-                VoiceController.get(guild.id)?.voiceChannelName
-              }. Join that channel and use /stop to make me free again.`
+              `Playing at ${voiceController?.voiceChannelName} join that channel to use this command.`
             ),
           });
         }
       } else {
         await interaction.reply({
-          embeds: convertToCode(`You are not a ${Roles.DJ}`),
+          embeds: convertToCode(`You are not a '${Roles.DJ}'`),
         });
       }
     } else {
-      await interaction.reply({
-        embeds: convertToCode(`No search term was given`),
-      });
+      play(interaction, VoiceController);
     }
   } catch (e) {
-    // console.error(e);
     handleError(interaction.guild as Guild, e);
   }
 }
 
-export default play;
+export default next;

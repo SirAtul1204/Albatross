@@ -3,7 +3,8 @@ import { convertToCode } from "../utils/convertToCode";
 import { registerCommands } from "../utils/deploy-commands";
 import { ANNOUNCEMENT_CHANNEL_NAME, Errors, Roles } from "../utils/enum";
 import { handleError } from "../utils/handleError";
-
+import { DetailsModel } from "../db/schema";
+import { initializeDb } from "../db/initializeDb";
 export async function joinedGuild(guild: Guild) {
   try {
     const allChannels = await guild.channels.fetch();
@@ -68,6 +69,8 @@ export async function joinedGuild(guild: Guild) {
         `Please check and review the Roles and their positions in your ${guild.name} server`
       ),
     });
+
+    initializeDb(guild.id);
 
     // Register Slash Commands
     registerCommands(guild.id);
