@@ -28,7 +28,7 @@ jobs:
 
       - name: Create .env file
         run: |
-          sudo touch.env
+          sudo touch .env
           sudo echo CLIENT_ID=${{ secrets.CLIENT_ID }} >> .env
           sudo echo GUILD_ID=${{ secrets.GUILD_ID }} >> .env
           sudo echo TOKEN=${{ secrets.TOKEN }} >> .env
