@@ -26,6 +26,16 @@ jobs:
           sudo yarn install
           sudo yarn build
 
+      - name: Create .env file
+        run: |
+          sudo touch.env
+          sudo echo CLIENT_ID=${{ secrets.CLIENT_ID }} >> .env
+          sudo echo GUILD_ID=${{ secrets.GUILD_ID }} >> .env
+          sudo echo TOKEN=${{ secrets.TOKEN }} >> .env
+          sudo echo YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY }} >> .env
+          sudo echo MONGODB_URI=${{ secrets.MONGODB_URI }} >> .env
+          sudo echo TENOR_GIF_KEY=${{ secrets.TENOR_GIF_KEY }} >> .env
+
       - name: Start
         run: |
           sudo yarn start
