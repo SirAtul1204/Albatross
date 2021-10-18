@@ -25,7 +25,7 @@ jobs:
 
       - name: Stop Albatross
         run: |
-          sudo pm2 stop "yarn start"
+          sudo pm2 stop albatross
 
       - name: Build
         run: |
@@ -34,4 +34,4 @@ jobs:
 
       - name: Start
         run: |
-          sudo pm2 restart "yarn start"
+          sudo pm2 restart albatross
