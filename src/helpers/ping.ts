@@ -6,7 +6,7 @@ export async function ping(interaction: CommandInteraction, client: Client) {
   try {
     //Latency
     await interaction.reply({
-      embeds: convertToCode(`Pong! ${client.ws.ping}ms`),
+      embeds: convertToCode(`Pong! ${client.ws.ping}ms 👋`),
     });
   } catch (e) {
     handleError(interaction.guild as Guild, e);
