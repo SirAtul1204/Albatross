@@ -2,7 +2,7 @@ name: NodeJS
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
@@ -11,20 +11,21 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x]
-    
+
     steps:
-    - uses: actions/checkout@v2
+      - run: sudo chown -R $USER:$USER /home/github/actions-runner/_work/{Albatross}
+      - uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Build
-      run: |
-        sudo yarn install
-        sudo yarn build
+      - name: Build
+        run: |
+          sudo yarn install
+          sudo yarn build
 
-    - name: Start
-      run: |
-        sudo yarn start
+      - name: Start
+        run: |
+          sudo yarn start
