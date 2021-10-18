@@ -15,27 +15,23 @@ jobs:
     steps:
       - run: sudo chown -R $USER:$USER /home/azureuser/actions-runner/_work/Albatross
       - uses: actions/checkout@v2
+        with:
+          clean: "false"
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Stop Albatross
+        run: |
+          sudo pm2 stop "yarn start"
+
       - name: Build
         run: |
           sudo yarn install
           sudo yarn build
 
-      - name: Create .env file
-        run: |
-          sudo touch .env
-          sudo echo CLIENT_ID=${{ secrets.CLIENT_ID }} >> .env
-          sudo echo GUILD_ID=${{ secrets.GUILD_ID }} >> .env
-          sudo echo TOKEN=${{ secrets.TOKEN }} >> .env
-          sudo echo YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY }} >> .env
-          sudo echo MONGODB_URI=${{ secrets.MONGODB_URI }} >> .env
-          sudo echo TENOR_GIF_KEY=${{ secrets.TENOR_GIF_KEY }} >> .env
-
       - name: Start
         run: |
-          sudo yarn start
+          sudo pm2 restart "yarn start"
