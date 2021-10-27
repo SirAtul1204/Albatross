@@ -13,10 +13,11 @@ import { Roles, VoiceObject } from "../utils/enum";
 import { handleError } from "../utils/handleError";
 import play from "./play";
 
+// MOves to the next song in queue
 export async function next(
   interaction: CommandInteraction,
   VoiceController: Map<string, VoiceObject>
-) {
+): Promise<void> {
   try {
     const guild = interaction.guild as Guild;
     const voiceController = VoiceController.get(guild.id);

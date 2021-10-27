@@ -8,7 +8,11 @@ import {
 import { convertToCode } from "../utils/convertToCode";
 import { handleError } from "../utils/handleError";
 
-export async function kick(interaction: CommandInteraction, client: Client) {
+// kicks a member
+export async function kick(
+  interaction: CommandInteraction,
+  client: Client
+): Promise<void> {
   try {
     // Getting the member who invoked the command
     const member = interaction.member as GuildMember;

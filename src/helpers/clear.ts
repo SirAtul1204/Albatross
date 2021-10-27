@@ -3,6 +3,7 @@ import { convertToCode } from "../utils/convertToCode";
 import { Roles, VoiceObject } from "../utils/enum";
 import { handleError } from "../utils/handleError";
 
+// Clears the queue
 export async function clear(
   interaction: CommandInteraction,
   VoiceController: Map<string, VoiceObject>

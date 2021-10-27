@@ -4,10 +4,11 @@ import { handleError } from "../utils/handleError";
 import { Errors, Roles, VoiceObject } from "../utils/enum";
 import { convertToCode } from "../utils/convertToCode";
 
+// To pause the playing audio
 export async function pause(
   interaction: CommandInteraction,
   VoiceController: Map<string, VoiceObject>
-) {
+): Promise<void> {
   try {
     const guild = interaction.guild as Guild;
     const member = interaction.member as GuildMember;

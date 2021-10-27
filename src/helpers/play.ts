@@ -18,10 +18,11 @@ import { convertToCode } from "../utils/convertToCode";
 import { Roles, VoiceObject } from "../utils/enum";
 import { DetailsModel } from "../db/schema";
 
+// Play audio based on a search term
 export async function play(
   interaction: CommandInteraction,
   VoiceController: Map<string, VoiceObject>
-) {
+): Promise<void> {
   try {
     const guild = interaction.guild as Guild;
     const member = interaction.member as GuildMember;

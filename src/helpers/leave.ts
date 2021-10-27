@@ -9,7 +9,7 @@ import { convertToCode } from "../utils/convertToCode";
 import { ANNOUNCEMENT_CHANNEL_NAME, Roles } from "../utils/enum";
 import { handleError } from "../utils/handleError";
 
-export async function leave(interaction: CommandInteraction) {
+export async function leave(interaction: CommandInteraction): Promise<void> {
   try {
     const member = interaction.member as GuildMember;
     const guild = interaction.guild as Guild;

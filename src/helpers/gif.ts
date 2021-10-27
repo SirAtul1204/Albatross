@@ -5,7 +5,8 @@ import { handleError } from "../utils/handleError";
 
 let GIF_LIMIT = 3;
 
-export async function gif(interaction: CommandInteraction) {
+// Search and send a GIF
+export async function gif(interaction: CommandInteraction): Promise<void> {
   try {
     const search = interaction.options.getString("search");
     if (search) {

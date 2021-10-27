@@ -4,7 +4,10 @@ import { registerCommands } from "../utils/deploy-commands";
 import { ANNOUNCEMENT_CHANNEL_NAME, Errors, Roles } from "../utils/enum";
 import { handleError } from "../utils/handleError";
 import { initializeDb } from "../db/initializeDb";
-export async function joinedGuild(guild: Guild) {
+
+// Creates announcement channel and roles
+// runs whenever bot joins a group or the user uses /update command
+export async function joinedGuild(guild: Guild): Promise<void> {
   try {
     const allChannels = await guild.channels.fetch();
     let announcementChannel = allChannels.find(

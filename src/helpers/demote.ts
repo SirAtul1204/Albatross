@@ -9,7 +9,8 @@ import { convertToCode } from "../utils/convertToCode";
 import { Errors, Roles } from "../utils/enum";
 import { handleError } from "../utils/handleError";
 
-export async function demote(interaction: CommandInteraction) {
+// Demote a guild member
+export async function demote(interaction: CommandInteraction): Promise<void> {
   try {
     const guild = interaction.guild as Guild;
     const member = interaction.member as GuildMember;

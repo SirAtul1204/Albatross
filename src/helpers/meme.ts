@@ -11,7 +11,8 @@ const memesSubReddits = [
   "dankmemes",
 ];
 
-export async function meme(interaction: CommandInteraction) {
+// Randomly sends a meme from popular reddit meme subreddit
+export async function meme(interaction: CommandInteraction): Promise<void> {
   try {
     let url = "https://meme-api.herokuapp.com/gimme/";
     const subReddit =

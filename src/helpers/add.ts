@@ -3,10 +3,11 @@ import { convertToCode } from "../utils/convertToCode";
 import { Roles, VoiceObject } from "../utils/enum";
 import { handleError } from "../utils/handleError";
 
+// Adds the song to queue
 export async function add(
   interaction: CommandInteraction,
   VoiceController: Map<string, VoiceObject>
-) {
+): Promise<void> {
   try {
     const guild = interaction.guild as Guild;
     const member = interaction.member as GuildMember;

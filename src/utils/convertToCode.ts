@@ -1,5 +1,6 @@
 import { MessageEmbed } from "discord.js";
 
+// Updates the simple text to a embed message
 export function convertToCode(
   title: string,
   description?: string,
@@ -10,7 +11,4 @@ export function convertToCode(
   if (img) embed.setImage(img);
 
   return [embed];
-  // const backTick = "`";
-  // let res = backTick.concat(s).concat(backTick);
-  // return res;
 }

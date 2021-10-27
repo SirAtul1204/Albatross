@@ -2,7 +2,11 @@ import { Client, CommandInteraction, Guild } from "discord.js";
 import { convertToCode } from "../utils/convertToCode";
 import { handleError } from "../utils/handleError";
 
-export async function ping(interaction: CommandInteraction, client: Client) {
+// Check the connection of the bot
+export async function ping(
+  interaction: CommandInteraction,
+  client: Client
+): Promise<void> {
   try {
     //Latency
     await interaction.reply({

@@ -1,3 +1,4 @@
+// Import modules and packages
 import { config } from "dotenv";
 import { connect } from "mongoose";
 import { Client, Guild, GuildChannel, Intents } from "discord.js";
@@ -25,7 +26,7 @@ import ping from "./helpers/ping";
 import kick from "./helpers/kick";
 import joinedGuild from "./helpers/joinedGuild";
 import announcementChannelDelete from "./helpers/announcementChannelDelete";
-import deletedGuild from "./helpers/deletedGuild";
+// import deletedGuild from "./helpers/deletedGuild";
 import update from "./helpers/update";
 import leave from "./helpers/leave";
 import promote from "./helpers/promote";
@@ -44,15 +45,20 @@ import meme from "./helpers/meme";
 import show from "./helpers/show";
 config();
 
+// Connecting MONGO_DB
 connect(String(process.env.MONGODB_URI), () => {
   console.log("Connected to MongoDB");
 });
 
+// the object which stores information like currently playing sound, and resources related to it such as
+// audio player, audio resource
 export const VoiceController: Map<string, VoiceObject> = new Map();
 
+// Connecting to client
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES],
 });
+
 client.once("ready", () => {
   console.log("Ready!⚡");
 });
@@ -61,6 +67,7 @@ client.on("guildCreate", async (guild: Guild) => {
   joinedGuild(guild);
 });
 
+//Listening for interactions
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
 
