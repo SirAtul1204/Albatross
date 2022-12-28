@@ -14,7 +14,7 @@ const memesSubReddits = [
 // Randomly sends a meme from popular reddit meme subreddit
 export async function meme(interaction: CommandInteraction): Promise<void> {
   try {
-    let url = "https://meme-api.herokuapp.com/gimme/";
+    let url = "https://meme-api.com/gimme/";
     const subReddit =
       memesSubReddits[Math.floor(Math.random() * memesSubReddits.length)];
     url += subReddit;

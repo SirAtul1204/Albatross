@@ -625,7 +625,7 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
-m3u8stream@^0.8.4:
+m3u8stream@^0.8.6:
   version "0.8.6"
   resolved "https://registry.yarnpkg.com/m3u8stream/-/m3u8stream-0.8.6.tgz#0d6de4ce8ee69731734e6b616e7b05dd9d9a55b1"
   integrity sha512-LZj8kIVf9KCphiHmH7sbFQTVe4tOemb202fWwvJwR9W5ENW/1hxJN6ksAWGhQgSBSa3jyWhnjKU1Fw1GaOdbyA==
@@ -661,11 +661,6 @@ mime-types@^2.1.12:
   integrity sha512-plLElXp7pRDd0bNZHw+nMd52vRYjLwQjygaNg7ddJ2uJtTlmnTCjWuPKxVu6//AdaRuME84SvLW91sIkBqGT0g==
   dependencies:
     mime-db "1.50.0"
-
-miniget@^4.0.0:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/miniget/-/miniget-4.2.1.tgz#11a1c24817a059e292378eb9cff4328d9240c665"
-  integrity sha512-O/DduzDR6f+oDtVype9S/Qu5hhnx73EDYGyZKwU/qN82lehFZdfhoa4DT51SpsO+8epYrB3gcRmws56ROfTIoQ==
 
 miniget@^4.2.2:
   version "4.2.2"
@@ -1201,11 +1196,11 @@ yn@3.1.1:
   resolved "https://registry.yarnpkg.com/yn/-/yn-3.1.1.tgz#1e87401a09d767c1d5eab26a6e4c185182d2eb50"
   integrity sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==
 
-ytdl-core@^4.10.0:
-  version "4.10.0"
-  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-4.10.0.tgz#0835cb411677684539fac2bcc10553f6f58db3e1"
-  integrity sha512-RCCoSVTmMeBPH5NFR1fh3nkDU9okvWM0ZdN6plw6I5+vBBZVUEpOt8vjbSgprLRMmGUsmrQZJhvG1CHOat4mLA==
+ytdl-core@^4.11.2:
+  version "4.11.2"
+  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-4.11.2.tgz#c2341916b9757171741a2fa118b6ffbb4ffd92f7"
+  integrity sha512-D939t9b4ZzP3v0zDvehR2q+KgG97UTgrTKju3pOPGQcXtl4W6W5z0EpznzcJFu+OOpl7S7Ge8hv8zU65QnxYug==
   dependencies:
-    m3u8stream "^0.8.4"
-    miniget "^4.0.0"
+    m3u8stream "^0.8.6"
+    miniget "^4.2.2"
     sax "^1.1.3"

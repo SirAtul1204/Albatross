@@ -22,7 +22,7 @@
     "ffmpeg-static": "^4.4.0",
     "mongoose": "^6.0.9",
     "tweetnacl": "^1.0.3",
-    "ytdl-core": "^4.10.0"
+    "ytdl-core": "^4.11.2"
   },
   "devDependencies": {
     "ts-node-dev": "^1.1.8",
