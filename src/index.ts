@@ -4,6 +4,7 @@ import { connect } from "mongoose";
 import { Client, Guild, GuildChannel, Intents } from "discord.js";
 import {
   ADD,
+  ANNOUNCE,
   CLEAR,
   DEMOTE,
   GIF,
@@ -43,6 +44,7 @@ import next from "./helpers/next";
 import gif from "./helpers/gif";
 import meme from "./helpers/meme";
 import show from "./helpers/show";
+import { announce } from "./helpers/announce";
 config();
 
 // Connecting MONGO_DB
@@ -124,6 +126,9 @@ client.on("interactionCreate", async (interaction) => {
       break;
     case SHOW:
       await show(interaction, VoiceController);
+      break;
+    case ANNOUNCE:
+      await announce(interaction);
       break;
     default:
       await interaction.reply({ embeds: convertToCode("Wrong Command") });

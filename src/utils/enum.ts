@@ -11,6 +11,7 @@ export enum Errors {
   userNotFound = "Invalid User",
   roleNotFound = "Invalid Role",
   audioPlayerNotFound = "No AudioPlayer Found, are you really playing?",
+  missingArgument = "Argument is required",
 }
 
 export enum Roles {

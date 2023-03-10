@@ -20,6 +20,7 @@ import {
   GIF,
   MEME,
   SHOW,
+  ANNOUNCE,
 } from "./commands";
 
 export function registerCommands(GUILD_ID: string) {
@@ -136,6 +137,21 @@ export function registerCommands(GUILD_ID: string) {
     new SlashCommandBuilder()
       .setName(SHOW)
       .setDescription("Shows current queue"),
+    new SlashCommandBuilder()
+      .setName(ANNOUNCE)
+      .setDescription("Make an announcement")
+      .addStringOption((option) =>
+        option
+          .setName("title")
+          .setDescription("title of your announcement")
+          .setRequired(true)
+      )
+      .addStringOption((option) => {
+        return option
+          .setName("message")
+          .setDescription("Message of your announcement")
+          .setRequired(true);
+      }),
   ].map((command) => command.toJSON());
 
   const rest = new REST({ version: "9" }).setToken(String(process.env.TOKEN));

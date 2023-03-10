@@ -15,3 +15,4 @@ export const NEXT = "next";
 export const GIF = "gif";
 export const MEME = "meme";
 export const SHOW = "show";
+export const ANNOUNCE = "announce";

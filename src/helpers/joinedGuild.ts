@@ -14,15 +14,32 @@ export async function joinedGuild(guild: Guild): Promise<void> {
       (channel) =>
         channel.name === ANNOUNCEMENT_CHANNEL_NAME && channel.isText()
     );
+    let commandChannel = allChannels.find(
+      (channel) => channel.name === "COMMAND_CHANNEL" && channel.isText()
+    );
     console.log(`Joined or updated ${guild.name}.`);
 
     if (!announcementChannel)
       announcementChannel = await guild.channels.create(
         ANNOUNCEMENT_CHANNEL_NAME,
-        { type: "GUILD_TEXT" }
+        {
+          type: "GUILD_TEXT",
+          permissionOverwrites: [
+            {
+              id: guild.id,
+              deny: ["SEND_MESSAGES", "USE_APPLICATION_COMMANDS"],
+            },
+          ],
+        }
       );
 
     if (!announcementChannel) throw Errors.announcementChannelCantBeCreated;
+
+    if (!commandChannel)
+      commandChannel = await guild.channels.create("COMMAND_CHANNEL", {
+        type: "GUILD_TEXT",
+        permissionOverwrites: [{ id: guild.id, deny: ["VIEW_CHANNEL"] }],
+      });
 
     const roleManager = new RoleManager(guild);
     if (!roleManager) throw Errors.roleManagerCantBeCreated;
