@@ -1,7 +1,12 @@
 import { Guild, RoleManager, TextChannel, Permissions } from "discord.js";
 import { convertToCode } from "../utils/convertToCode";
 import { registerCommands } from "../utils/deploy-commands";
-import { ANNOUNCEMENT_CHANNEL_NAME, Errors, Roles } from "../utils/enum";
+import {
+  ANNOUNCEMENT_CHANNEL_NAME,
+  COMMAND_CHANNEL_NAME,
+  Errors,
+  Roles,
+} from "../utils/enum";
 import { handleError } from "../utils/handleError";
 import { initializeDb } from "../db/initializeDb";
 
@@ -15,7 +20,7 @@ export async function joinedGuild(guild: Guild): Promise<void> {
         channel.name === ANNOUNCEMENT_CHANNEL_NAME && channel.isText()
     );
     let commandChannel = allChannels.find(
-      (channel) => channel.name === "COMMAND_CHANNEL" && channel.isText()
+      (channel) => channel.name === COMMAND_CHANNEL_NAME && channel.isText()
     );
     console.log(`Joined or updated ${guild.name}.`);
 
@@ -36,7 +41,7 @@ export async function joinedGuild(guild: Guild): Promise<void> {
     if (!announcementChannel) throw Errors.announcementChannelCantBeCreated;
 
     if (!commandChannel)
-      commandChannel = await guild.channels.create("COMMAND_CHANNEL", {
+      commandChannel = await guild.channels.create(COMMAND_CHANNEL_NAME, {
         type: "GUILD_TEXT",
         permissionOverwrites: [{ id: guild.id, deny: ["VIEW_CHANNEL"] }],
       });

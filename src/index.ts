@@ -1,11 +1,13 @@
 // Import modules and packages
 import { config } from "dotenv";
 import { connect } from "mongoose";
-import { Client, Guild, GuildChannel, Intents } from "discord.js";
+import { Client, Guild, GuildChannel, GuildMember, Intents } from "discord.js";
 import {
   ADD,
   ANNOUNCE,
   CLEAR,
+  CREATE_CHANNEL,
+  CREATE_ROLE,
   DEMOTE,
   GIF,
   KICK,
@@ -18,6 +20,7 @@ import {
   PROMOTE,
   RESUME,
   SHOW,
+  START_ROLE_ASSIGNER,
   STOP,
   UPDATE,
   VOLUME,
@@ -45,6 +48,9 @@ import gif from "./helpers/gif";
 import meme from "./helpers/meme";
 import show from "./helpers/show";
 import { announce } from "./helpers/announce";
+import { createChannel } from "./helpers/createChannel";
+import { createRole } from "./helpers/createRole";
+import { startRoleAssigner } from "./helpers/startRoleAssigner";
 config();
 
 // Connecting MONGO_DB
@@ -130,9 +136,37 @@ client.on("interactionCreate", async (interaction) => {
     case ANNOUNCE:
       await announce(interaction);
       break;
+    case CREATE_CHANNEL:
+      await createChannel(interaction);
+      break;
+    case CREATE_ROLE:
+      await createRole(interaction);
+      break;
+    case START_ROLE_ASSIGNER:
+      await startRoleAssigner(interaction);
+      break;
     default:
       await interaction.reply({ embeds: convertToCode("Wrong Command") });
       break;
+  }
+});
+
+client.on("interactionCreate", async (interaction) => {
+  if (!interaction.isButton()) return;
+  const { customId, member } = interaction;
+  const options = customId.split("/");
+  if (options[0] === "role") {
+    const roles = await interaction.guild?.roles.fetch();
+    const requiredRole = roles?.find((role) => role.name === options[1]);
+    (member as GuildMember).roles.add(requiredRole!);
+    await interaction.reply({
+      embeds: convertToCode(
+        `${(member as GuildMember).displayName} have been assigned the role ${
+          options[1]
+        }`
+      ),
+      ephemeral: true,
+    });
   }
 });
 

@@ -12,6 +12,7 @@ export enum Errors {
   roleNotFound = "Invalid Role",
   audioPlayerNotFound = "No AudioPlayer Found, are you really playing?",
   missingArgument = "Argument is required",
+  youAreNotAuthorized = "You are not authorized",
 }
 
 export enum Roles {
@@ -20,6 +21,7 @@ export enum Roles {
 }
 
 export const ANNOUNCEMENT_CHANNEL_NAME = "albatross-announcement".toLowerCase();
+export const COMMAND_CHANNEL_NAME = "COMMAND_CHANNEL";
 
 export interface VoiceObject {
   connection: VoiceConnection;

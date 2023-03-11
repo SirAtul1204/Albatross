@@ -17,7 +17,7 @@ export async function announce(interaction: CommandInteraction) {
       throw new Error(Errors.announcementChannelNotFound);
 
     (announcementChannel as TextChannel).send({
-      embeds: convertToCode(title, message),
+      embeds: convertToCode(title, "@everyone " + message),
     });
     await interaction.reply({
       embeds: convertToCode("Done!"),
