@@ -55,7 +55,6 @@ export async function play(
             } else if (allOptions[0] === "q") {
               const queue = VoiceController.get(guild.id)?.queue;
               const ind = allOptions[1];
-              console.log(ind);
               // if (!queue || queue.length === 0 || queue.length < Number(ind)) {
               //   await interaction.reply({
               //     embeds: convertToCode(

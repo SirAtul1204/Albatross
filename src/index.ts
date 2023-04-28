@@ -1,7 +1,14 @@
 // Import modules and packages
 import { config } from "dotenv";
 import { connect } from "mongoose";
-import { Client, Guild, GuildChannel, GuildMember, Intents } from "discord.js";
+import {
+  Client,
+  Guild,
+  GuildChannel,
+  GuildMember,
+  Intents,
+  MessagePayload,
+} from "discord.js";
 import {
   ADD,
   ANNOUNCE,
@@ -51,6 +58,7 @@ import { announce } from "./helpers/announce";
 import { createChannel } from "./helpers/createChannel";
 import { createRole } from "./helpers/createRole";
 import { startRoleAssigner } from "./helpers/startRoleAssigner";
+import axios from "axios";
 config();
 
 // Connecting MONGO_DB
@@ -64,7 +72,11 @@ export const VoiceController: Map<string, VoiceObject> = new Map();
 
 // Connecting to client
 const client = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES],
+  intents: [
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_VOICE_STATES,
+    Intents.FLAGS.GUILD_MESSAGES,
+  ],
 });
 
 client.once("ready", () => {
@@ -168,6 +180,38 @@ client.on("interactionCreate", async (interaction) => {
       ephemeral: true,
     });
   }
+});
+
+client.on("messageCreate", async (message) => {
+  const response = await axios.post("http://localhost:5000/predictText", {
+    text: message.content,
+  });
+
+  if (response.data.prediction == "1") {
+    await message.reply({
+      embeds: convertToCode(
+        `Message of @${message.author.username} is deleted because of profanity`
+      ),
+    });
+    message.delete();
+  }
+
+  message.attachments.forEach(async (attachment, key) => {
+    if (attachment.contentType?.split("/")[0] == "image") {
+      const response = await axios.post("http://localhost:5000/predictImage", {
+        url: attachment.proxyURL,
+      });
+
+      if (response.data.prediction == "1") {
+        await message.reply({
+          embeds: convertToCode(
+            `Message of @${message.author.username} is deleted because of profanity`
+          ),
+        });
+        message.delete();
+      }
+    }
+  });
 });
 
 client.on("channelDelete", async (channel) => {

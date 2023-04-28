@@ -48,7 +48,9 @@ export async function startRoleAssigner(interaction: CommandInteraction) {
     });
 
     await interaction.reply({
-      embeds: convertToCode("Started"),
+      embeds: convertToCode(
+        "Started the role assigner in Announcement channel"
+      ),
     });
   } catch (e) {
     handleError(interaction.guild as Guild, e);
