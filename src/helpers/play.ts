@@ -17,6 +17,8 @@ import { handleError } from "../utils/handleError";
 import { convertToCode } from "../utils/convertToCode";
 import { Roles, VoiceObject } from "../utils/enum";
 import { DetailsModel } from "../db/schema";
+import { leftRotateArray } from "../utils/leftRotateArray";
+import next from "./next";
 
 // Play audio based on a search term
 export async function play(
@@ -50,6 +52,19 @@ export async function play(
               url = allOptions[1];
               const parsedUrl = new URL(url);
               videoId = String(parsedUrl.searchParams.get("v"));
+            } else if (allOptions[0] === "q") {
+              const queue = VoiceController.get(guild.id)?.queue;
+              const ind = allOptions[1];
+              // if (!queue || queue.length === 0 || queue.length < Number(ind)) {
+              //   await interaction.reply({
+              //     embeds: convertToCode(
+              //       `Queue is empty or index is out of range`
+              //     ),
+              //   });
+              //   return;
+              // }
+              leftRotateArray(queue!, Number(ind) - 1);
+              await next(interaction, VoiceController);
             } else {
               //Youtube Search API
               const searchUrl = `https://www.googleapis.com/youtube/v3/search?key=${

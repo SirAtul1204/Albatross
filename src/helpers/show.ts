@@ -13,7 +13,10 @@ export async function show(
     if (voiceController) {
       const queue = voiceController.queue;
       if (queue.length >= 1) {
-        const all = queue.join("\n");
+        const all = queue
+          .map((song, index) => `${index + 1}. ${song}`)
+          .join("\n");
+        // const all = queue.join("\n\n");
         await interaction.reply({
           embeds: convertToCode(`Current Queue`, all),
         });

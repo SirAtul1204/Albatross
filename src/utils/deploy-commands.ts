@@ -20,6 +20,10 @@ import {
   GIF,
   MEME,
   SHOW,
+  ANNOUNCE,
+  CREATE_CHANNEL,
+  CREATE_ROLE,
+  START_ROLE_ASSIGNER,
 } from "./commands";
 
 export function registerCommands(GUILD_ID: string) {
@@ -136,6 +140,58 @@ export function registerCommands(GUILD_ID: string) {
     new SlashCommandBuilder()
       .setName(SHOW)
       .setDescription("Shows current queue"),
+    new SlashCommandBuilder()
+      .setName(ANNOUNCE)
+      .setDescription("Make an announcement")
+      .addStringOption((option) =>
+        option
+          .setName("title")
+          .setDescription("Title of your announcement")
+          .setRequired(true)
+      )
+      .addStringOption((option) => {
+        return option
+          .setName("message")
+          .setDescription("Message of your announcement")
+          .setRequired(true);
+      }),
+    new SlashCommandBuilder()
+      .setName(CREATE_CHANNEL)
+      .setDescription("Create a new channel")
+      .addStringOption((option) =>
+        option
+          .setName("type")
+          .setDescription("text | voice")
+          .addChoices([
+            ["TEXT", "text"],
+            ["VOICE", "voice"],
+          ])
+          .setRequired(true)
+      )
+      .addStringOption((option) =>
+        option
+          .setName("name")
+          .setDescription("Name of the channel")
+          .setRequired(true)
+      ),
+    new SlashCommandBuilder()
+      .setName(CREATE_ROLE)
+      .setDescription("Create a role")
+      .addStringOption((option) =>
+        option
+          .setName("name")
+          .setDescription("Name of the role")
+          .setRequired(true)
+      ),
+    new SlashCommandBuilder()
+      .setName(START_ROLE_ASSIGNER)
+      .setDescription("Starts a roles assigner")
+      .addRoleOption((role) =>
+        role
+          .setName("role")
+          .setDescription("The role you want the assigner to be for")
+          .setRequired(true)
+      ),
   ].map((command) => command.toJSON());
 
   const rest = new REST({ version: "9" }).setToken(String(process.env.TOKEN));

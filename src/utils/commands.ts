@@ -15,3 +15,7 @@ export const NEXT = "next";
 export const GIF = "gif";
 export const MEME = "meme";
 export const SHOW = "show";
+export const ANNOUNCE = "announce";
+export const CREATE_CHANNEL = "create_channel";
+export const CREATE_ROLE = "create_role";
+export const START_ROLE_ASSIGNER = "start_role_assigner";
